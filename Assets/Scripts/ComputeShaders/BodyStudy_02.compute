@@ -1,0 +1,70 @@
+#pragma kernel CSMain
+
+#include "Assets/Scripts/ComputeShaders/DataStructs.hlsl"
+#include "Assets/Scripts/Utils/maths.hlsl"
+#include "Assets/Scripts/Utils/sdf3Dshape.hlsl"
+#include "Assets/Scripts/Utils/sdfOperator.hlsl"
+#include "Assets/Scripts/Utils/noises.hlsl"
+#include "Assets/Scripts/Utils/easing.hlsl"
+
+uniform RWStructuredBuffer<MeshProperties> _Properties;
+uniform StructuredBuffer<float3> _Position;
+uniform int _PositionCount;
+uniform float3 _World;
+uniform float3 _ModelDescription;
+uniform float _MinScale;
+uniform float _MaxScale;
+uniform float _Time;
+uniform float4x4 _TRS;
+
+// For the sake of simplicity, only using 1000, 1, 1 threads.
+[numthreads(1, 1, 1)]
+void CSMain (uint3 id : SV_DispatchThreadID) {
+
+    float4x4 trmat  = _Properties[id.x].trmat;
+    float4x4 oscmat = _Properties[id.x].oscmat;
+    float4x4 scmat  = _Properties[id.x].scmat;
+    float ascale    = float3(scmat[0][0], scmat[1][1], scmat[2][2]);
+    float oscale    = float3(oscmat[0][0], oscmat[1][1], oscmat[2][2]);
+    int index       = int(_Properties[id.x].data.x);
+
+    float rnd       = random(float(index));
+    int maxTime     = rnd * 2.0 + 2.0;
+
+    float time      = _Time + rnd * 4.0;
+    float mod       = (time %  maxTime);
+    float normTime  = mod / maxTime;
+    float loop      = floor(time / maxTime) + 1.0;
+
+    float rnd2      = random(float(loop + index));
+    float maxScale  = oscale + oscale * (rnd2 * 1.0);
+
+    float eased     = outCubic(normTime);
+    float newScale  = lerp(0, oscale, eased);
+
+
+    // In a transform matrix, the position (translation) vector is the last column.
+    int newIndex    = int(rnd2 * _PositionCount);
+    float3 position = _Position[newIndex];
+
+    //apply the transform TRS matrix to retreive move from model space to model in world space
+    position        = mul(_TRS, float4(position, 1)).xyz;
+    float4x4 transform = float4x4(
+        1, 0, 0, position.x,
+        0, 1, 0, position.y,
+        0, 0, 1, position.z,
+        0, 0, 0, 1
+    );
+
+    float4x4 scale = float4x4(
+        newScale, 0, 0, 0,
+        0, newScale, 0, 0,
+        0, 0, newScale, 0,
+        0, 0, 0, 1
+    );
+
+    _Properties[id.x].trmat     = transform;
+    _Properties[id.x].scmat     = scale;
+    _Properties[id.x].color.a   = normTime;
+    _Properties[id.x].data.y    = rnd2;
+}

@@ -1,0 +1,91 @@
+#pragma kernel CSMain
+
+#include "Assets/Scripts/ComputeShaders/DataStructs.hlsl"
+#include "Assets/Scripts/Utils/maths.hlsl"
+#include "Assets/Scripts/Utils/sdf3Dshape.hlsl"
+#include "Assets/Scripts/Utils/sdfOperator.hlsl"
+#include "Assets/Scripts/Utils/noises.hlsl"
+#include "Assets/Scripts/Utils/easing.hlsl"
+#include "Assets/Scripts/Utils/MatrixFormAngleAxis.hlsl"
+
+uniform RWStructuredBuffer<MeshPropertiesExtended> _Properties;
+uniform StructuredBuffer<float3> _Position;
+uniform int _PositionCount;
+uniform float3 _World;
+uniform float3 _ModelDescription;
+uniform float _MinScale;
+uniform float _MaxScale;
+uniform float _Time;
+uniform float4x4 _TRS;
+uniform float _Inverted;
+
+// For the sake of simplicity, only using 1000, 1, 1 threads.
+[numthreads(1, 1, 1)]
+void CSMain (uint3 id : SV_DispatchThreadID) {
+
+    float4x4 trmat  = _Properties[id.x].trmat;
+    float4x4 oscmat = _Properties[id.x].oscmat;
+    float4x4 scmat  = _Properties[id.x].scmat;
+    float3 ascale   = float3(scmat[0][0], scmat[1][1], scmat[2][2]);
+    float3 oscale   = float3(oscmat[0][0], oscmat[1][1], oscmat[2][2]);
+    float3 opos     = _Properties[id.x].opos;
+    int index       = int(_Properties[id.x].data.x);
+    float rndPerInstance    = _Properties[id.x].data.w;
+
+    float rnd       = random3(float3(index, index * 1.5, index * 4.5));
+    float maxTime   = rndPerInstance * 10.0 + 5.0;//rnd * 10.0 + 5.0;
+    float time      = _Time + rnd * 5.0;
+    float mod       = (time %  maxTime);
+    float normTime  = mod / maxTime;
+    float loop      = floor(time / maxTime) + 1.0;
+    float easedTime = outCubic(1.0 - abs(normTime * 2.0 - 1.0));
+    easedTime       = lerp(0.00, 1.0, saturate(easedTime));
+
+    float aloop     = _Properties[id.x].data.z;
+    if(aloop == loop) {
+    }else{
+        _Properties[id.x].data.z = loop; 
+    }
+    
+    float rndIndex  = int(random(float(loop + index + rndPerInstance)) * (_PositionCount - 1));
+
+    float3 position     = _Position[rndIndex];
+    float rndInstance   = _Properties[id.x].data.w;
+    float3 offseter     = float3((index + rndInstance), (index) * 1.5, (index + rndInstance) * 4.5);
+    float3 rndPos       = float3(random3(offseter), random3(offseter * -1.25487 + rndInstance), random3(offseter * 16.15641434 + rndInstance * 2.0)) * 2.0 - 1.0;
+    float rndPosScale   = lerp(0.015, 0.035, rndInstance);
+    position            += rndPos * rndPosScale;
+
+    float noiseScale        = 0.75f;
+    float noiseTimeScale    = 0.075f;
+    float scaler            = snoise(position * noiseScale + _Time * noiseTimeScale) * 0.5 + 0.5;
+    scaler                  = (_Inverted) ? 1.0 - scaler : scaler;
+    float scalerEased       = inoutQuad(scaler);
+    float3 newScale         = oscale * scalerEased * easedTime;
+
+
+    position            =  mul(_TRS, float4(position, 1)).xyz;
+    float4x4 transform = float4x4(
+        1, 0, 0, position.x,
+        0, 1, 0, position.y,
+        0, 0, 1, position.z,
+        0, 0, 0, 1
+    );
+
+    float4x4 scale = float4x4(
+        newScale.x, 0, 0, 0,
+        0, newScale.y, 0, 0,
+        0, 0, newScale.z, 0,
+        0, 0, 0, 1
+    );
+
+
+    _Properties[id.x].trmat     = transform;
+    // _Properties[id.x].rotmat    = rotation;
+    _Properties[id.x].scmat     = scale; 
+    // // _Properties[id.x].color.rgb = noiseColor;
+    // // _Properties[id.x].color.a   = min(noiseSc, easedTime);
+    _Properties[id.x].data.y    = easedTime;
+    // _Properties[id.x].data.z    = _Time;
+    // _Properties[id.x].opos      = float4(position, 1.0);
+}

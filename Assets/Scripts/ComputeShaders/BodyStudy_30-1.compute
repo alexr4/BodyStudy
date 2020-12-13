@@ -1,0 +1,81 @@
+#pragma kernel CSMain
+
+#include "Assets/Scripts/ComputeShaders/DataStructs.hlsl"
+#include "Assets/Scripts/Utils/maths.hlsl"
+#include "Assets/Scripts/Utils/sdf3Dshape.hlsl"
+#include "Assets/Scripts/Utils/sdfOperator.hlsl"
+#include "Assets/Scripts/Utils/noises.hlsl"
+#include "Assets/Scripts/Utils/easing.hlsl"
+#include "Assets/Scripts/Utils/MatrixFormAngleAxis.hlsl"
+#define PI 3.14159265359
+
+uniform RWStructuredBuffer<MeshPropertiesPhysisc> _Properties;
+uniform StructuredBuffer<float3> _Position;
+uniform int _PositionCount;
+uniform float3 _World;
+uniform float3 _ModelDescription;
+uniform float _MinScale;
+uniform float _MaxScale;
+uniform float _Time;
+uniform float4x4 _TRS;
+uniform Texture2D<float4> _BodyRamp;
+uniform float2 _RampSize;
+uniform  float _DeltaTime;
+uniform float3 _Wind;
+uniform float _MaxInstance;
+uniform float _MaxSize;
+uniform float _MinOffset;
+uniform float _MaxOffset;
+
+// For the sake of simplicity, only using 1000, 1, 1 threads.
+[numthreads(1, 1, 1)]
+void CSMain (uint3 id : SV_DispatchThreadID) {
+    float4x4 trmat          = _Properties[id.x].trmat;
+    float4x4 rotation       = _Properties[id.x].rotmat;
+    float4x4 oscmat         = _Properties[id.x].oscmat;
+    float4x4 scmat          = _Properties[id.x].scmat;
+
+    float4 opos             = _Properties[id.x].opos;
+    float3 norm             = _Properties[id.x].vel.xyz;
+    float3 acc              = _Properties[id.x].acc.xyz;
+    float3 position         = float3(trmat[0][3], trmat[1][3], trmat[2][3]);
+    float3 oscale           = float3(oscmat[0][0], oscmat[1][1], oscmat[2][2]);
+    int index               = int(_Properties[id.x].data.x);
+  
+    float3 offseter     = float3(index + opos.w, index * 1.5, (index + opos.w) * 4.5);
+    float3 rndPos       = float3(random3(offseter), 0, random3(offseter * 16.15641434 + opos.w * 2.0)) * 2.0 - 1.0;
+    rndPos              *= 0.5;
+    float rndAngle      = (opos.w * 2.0 - 1.0) * 0.5 * PI;
+            
+    float3 newNorm      = mul(AngleAxis3x3(rndAngle, rndPos), norm);
+
+    float normy         = saturate(opos.y / 1.8);
+    uint3 uvramp        = uint3(normy * _RampSize.x, 0.5 * _RampSize.y, 0);
+    float rampSize      = _BodyRamp.Load(uvramp);
+    float3 normOffset   = (_MinOffset + rampSize * (_MaxOffset - _MinOffset)) * newNorm;
+
+    float3  newposition =   mul(_TRS, float4(_Position[index].xyz, 1)).xyz + normOffset;
+    float3 vel          = newposition - position;
+
+    float noiseAngle    = noise(opos.xyz * 100.0 + opos.w * 10.0 + _Time * 0.1) * 2.0 - 1.0;
+    float3 dir          = normalize(newNorm);
+    float3 up           = float3(0, 1, 0);
+    float upDotDir      = dot(up, dir);
+    float angle         = abs(acos(upDotDir));
+    float3 axis         = normalize(cross(up, dir));
+    rotation            = AngleAxis4x4(PI * noiseAngle, axis);
+
+    float4x4 transform      = float4x4(
+        1, 0, 0, newposition.x,
+        0, 1, 0, newposition.y,
+        0, 0, 1, newposition.z,
+        0, 0, 0, 1
+    );
+
+    _Properties[id.x].trmat     = transform;
+    _Properties[id.x].rotmat    = rotation;
+    // _Properties[id.x].scmat     = scale;
+    // _Properties[id.x].color.a   = sizeInc;
+    // _Properties[id.x].data.y    = noisedShade;
+    // _Properties[id.x].data.w    = normTime;
+}

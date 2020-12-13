@@ -1,0 +1,89 @@
+#pragma kernel CSMain
+
+#include "Assets/Scripts/ComputeShaders/DataStructs.hlsl"
+#include "Assets/Scripts/Utils/maths.hlsl"
+#include "Assets/Scripts/Utils/sdf3Dshape.hlsl"
+#include "Assets/Scripts/Utils/sdfOperator.hlsl"
+#include "Assets/Scripts/Utils/noises.hlsl"
+#include "Assets/Scripts/Utils/easing.hlsl"
+
+uniform RWStructuredBuffer<MeshProperties> _Properties;
+uniform StructuredBuffer<float3> _Position;
+uniform int _PositionCount;
+uniform float3 _World;
+uniform float3 _ModelDescription;
+uniform float _MinScale;
+uniform float _MaxScale;
+uniform float _Time;
+uniform float4x4 _TRS;
+uniform float3 _Wind;
+
+// For the sake of simplicity, only using 1000, 1, 1 threads.
+[numthreads(1, 1, 1)]
+void CSMain (uint3 id : SV_DispatchThreadID) {
+
+    float4x4 trmat  = _Properties[id.x].trmat;
+    float4x4 oscmat = _Properties[id.x].oscmat;
+    float4x4 scmat  = _Properties[id.x].scmat;
+    float3 ascale   = float3(scmat[0][0], scmat[1][1], scmat[2][2]);
+    float3 oscale   = float3(oscmat[0][0], oscmat[1][1], oscmat[2][2]);
+    // In a transform matrix, the position (translation) vector is the last column.
+
+    int index       = int(_Properties[id.x].data.x);
+
+    float rnd       = random(float(index));
+    int maxTime     = rnd * 8.0 + 0.15;
+
+
+    float time      = _Time + rnd * 10.0;
+    float mod       = (time %  maxTime);
+    float normTime  = mod / maxTime;
+    float loop      = floor(time / maxTime) + 1.0;
+
+    //time for scale
+    float normTimeSc = smoothstep(0, 0.5, normTime);
+
+    float eased     = outCubic(abs(normTime * 2.0 - 1.0));
+    float eased2    = outCubic(1.0 - normTimeSc);
+    float rnd2      = random(float(loop + index));
+
+    // In a transform matrix, the position (translation) vector is the last column.
+    float aloop     = _Properties[id.x].data.z;
+    float3 apos;
+    if(aloop == loop) {
+        apos = float3(trmat[0][3], trmat[1][3], trmat[2][3]);
+    }else{
+        int newIndex    = int(rnd2 * _PositionCount);
+        apos            =  mul(_TRS, float4(_Position[newIndex], 1)).xyz;
+        _Properties[id.x].data.z = loop; 
+    }
+    float noiseScale    = 0.05;
+    float noiseInc      = lerp(0.01, 0.03, rnd2);
+    float3 vel          = curlNoise(apos * noiseScale + time * 0.5);
+    vel                 += _Wind * (1.0 + 1.0 * rnd2);
+    float3 position     = apos + vel * noiseInc * normTime;
+  
+    //scale
+    // float noiseScale    = snoise(apos + time) * 0.5 + 0.5;
+    float3 newScale     = oscale * 0.1 + (oscale * 0.9) * eased2;
+
+    float4x4 transform = float4x4(
+        1, 0, 0, position.x,
+        0, 1, 0, position.y,
+        0, 0, 1, position.z,
+        0, 0, 0, 1
+    );
+
+    float4x4 scale = float4x4(
+        newScale.x, 0, 0, 0,
+        0, newScale.y, 0, 0,
+        0, 0, newScale.z, 0,
+        0, 0, 0, 1
+    );
+
+    _Properties[id.x].trmat     = transform;
+    _Properties[id.x].scmat     = scale;
+    _Properties[id.x].color.a   = eased;
+    _Properties[id.x].data.y    = rnd2;
+    _Properties[id.x].data.w    = outCubic(normTime);
+}

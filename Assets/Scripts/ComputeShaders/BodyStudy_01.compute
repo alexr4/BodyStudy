@@ -1,0 +1,36 @@
+#pragma kernel CSMain
+
+#include "Assets/Scripts/ComputeShaders/DataStructs.hlsl"
+
+uniform RWStructuredBuffer<MeshProperties> _Properties;
+uniform StructuredBuffer<float3> _Position;
+uniform int _PositionCount;
+uniform float3 _World;
+uniform float3 _ModelDescription;
+uniform float _MinScale;
+uniform float _MaxScale;
+uniform float _Time;
+uniform float4x4 _TRS;
+
+// For the sake of simplicity, only using 1000, 1, 1 threads.
+[numthreads(1, 1, 1)]
+void CSMain (uint3 id : SV_DispatchThreadID) {
+
+    float4x4 trmat  = _Properties[id.x].trmat;
+    float4x4 oscmat = _Properties[id.x].oscmat;
+    int index       = int(_Properties[id.x].data.x);
+
+    // In a transform matrix, the position (translation) vector is the last column.
+    float3 position = _Position[index];
+
+    //apply the transform TRS matrix to retreive move from model space to model in world space
+    position        = mul(_TRS, float4(position, 1)).xyz;
+    float4x4 transform = float4x4(
+        1, 0, 0, position.x,
+        0, 1, 0, position.y,
+        0, 0, 1, position.z,
+        0, 0, 0, 1
+    );
+
+    _Properties[id.x].trmat = transform;
+}

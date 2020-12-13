@@ -1,0 +1,99 @@
+#pragma kernel CSMain
+
+#include "Assets/Scripts/ComputeShaders/DataStructs.hlsl"
+#include "Assets/Scripts/Utils/maths.hlsl"
+#include "Assets/Scripts/Utils/sdf3Dshape.hlsl"
+#include "Assets/Scripts/Utils/sdfOperator.hlsl"
+#include "Assets/Scripts/Utils/noises.hlsl"
+#include "Assets/Scripts/Utils/easing.hlsl"
+#include "Assets/Scripts/Utils/MatrixFormAngleAxis.hlsl"
+
+uniform RWStructuredBuffer<MeshPropertiesPhysisc> _Properties;
+uniform StructuredBuffer<float3> _Position;
+uniform int _PositionCount;
+uniform float3 _World;
+uniform float3 _ModelDescription;
+uniform float _MinScale;
+uniform float _MaxScale;
+uniform float _Time;
+uniform float4x4 _TRS;
+uniform Texture2D<float4> _BodyRamp;
+uniform float2 _RampSize;
+uniform  float _DeltaTime;
+
+// For the sake of simplicity, only using 1000, 1, 1 threads.
+[numthreads(1, 1, 1)]
+void CSMain (uint3 id : SV_DispatchThreadID) {
+    float4x4 trmat          = _Properties[id.x].trmat;
+    float4x4 rotation       = _Properties[id.x].rotmat;
+    float4x4 ortmat         = _Properties[id.x].oscmat;
+    float4x4 scmat          = _Properties[id.x].scmat;
+
+    float4 opos             = _Properties[id.x].opos;
+    float3 vel              = _Properties[id.x].vel.xyz;
+    float3 acc              = _Properties[id.x].acc.xyz;
+    float3 position         = float3(trmat[0][3], trmat[1][3], trmat[2][3]);
+    int index               = int(_Properties[id.x].data.x);
+
+    float rnd               = random3(float3(index, index * 1.5, index * 4.5));
+    float rnd2              = random3(float3(index + 45645, index * 1563.5, index * 4687.5));
+    float maxTime           = 3.0;//opos.w * 0.25 + 2.0;//rnd * 10.0 + 5.0;
+    float time              = _Time + opos.w * 0.5;  
+    float loop              = floor(time / maxTime);
+    float mod               = 0;
+    float normTime          = 0;
+
+    float aloop     = _Properties[id.x].data.z;
+    if(aloop == loop) {
+        mod               = time % maxTime;
+        normTime          = mod / maxTime;
+    }else{
+        _Properties[id.x].data.z = loop;
+        normTime                 = 1;
+        mod                      = 1;
+        // vel                      = float3(0, 0, 0);
+        // acc                      = float3(0, 0, 0);
+    }
+
+
+    // //size management
+    float normy         = saturate(opos.y / 1.8);
+    uint3 uvramp        = uint3(normy * _RampSize.x, 0.5 * _RampSize.y, 0);
+    float rampSize      = _BodyRamp.Load(uvramp);
+ 
+    float3 size         = _MinScale + float3(rampSize, rampSize, rampSize) * (_MaxScale - _MinScale);
+
+
+    float angle         = _Time;
+    float randX         = random3(opos.xyz) * 2.0 - 1.0;
+    float randY         = random3(opos.xyz + opos.w * 456321.156633) * 2.0 - 1.0;
+    float randZ         = random3(opos.xyz - opos.w * 15646.1443) * 2.0 - 1.0;
+    float3 axis         = normalize(float3(randX, randY, randZ));
+    rotation            = AngleAxis4x4(angle, axis);
+
+    position            = _Position[index];
+    position            = mul(_TRS, float4(position, 1)).xyz;
+    
+    float4x4 transform      = float4x4(
+        1, 0, 0, position.x,
+        0, 1, 0, position.y,
+        0, 0, 1, position.z,
+        0, 0, 0, 1
+    );
+    
+    float4x4 scale         = float4x4(
+        size.x  , 0     , 0     , 0,
+        0       , size.y, 0     , 0,
+        0       , 0     , size.z, 0,
+        0       , 0     , 0     , 1
+    );
+
+    _Properties[id.x].trmat     = transform;
+    _Properties[id.x].rotmat    = rotation;
+    _Properties[id.x].scmat     = scale;
+    // _Properties[id.x].vel       = float4(vel, 0.0);
+    // _Properties[id.x].acc       = float4(acc, 0.0);
+    // _Properties[id.x].color.a   = 1.0;
+    // _Properties[id.x].data.y    = 0;
+    // _Properties[id.x].data.w    = 0;
+}
