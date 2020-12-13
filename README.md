@@ -1,4 +1,6 @@
 # Codevember2020
+![gif](https://arivaux.com/prototype/WO-Part1-5-_1.gif)
+
 This repository regroups all the Body Experiments started on Codevember 2020.
 Codevember is a coding challenge proposing to create a creative coding experiment each day during the month of November. 
 Once again, in 2020, I’ve tried it, but this year was quite different. I’ve streamed each experiment on instagram and on twitch. 
