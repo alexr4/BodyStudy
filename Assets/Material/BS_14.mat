@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_14
+  m_Shader: {fileID: 4800000, guid: f25116bd37d10394d9548db0f70887d9, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AO:
+        m_Texture: {fileID: 2800000, guid: c5082b2ae8d2f264cbd0380e60e8f217, type: 3}
+        m_Scale: {x: 0.25, y: 0.25}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _Cube:
+        m_Texture: {fileID: 8900000, guid: 640f2359ffd81514aa1847a04c4d7226, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FurTex:
+        m_Texture: {fileID: 2800000, guid: 8a9523450809cc447ac5bbac44471693, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GravityTex:
+        m_Texture: {fileID: 2800000, guid: 107594afe2ad5f44daf3ed89bf5a2261, type: 3}
+        m_Scale: {x: 0.25, y: 0.25}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: d5dcc95bc528e364d93a51f91d5bb467, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metallic:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: 98142ebfe3ff93e49b53e43e60cb1192, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Roughness:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlbedoEmission: 0.01
+    - _AlphaTest: 1
+    - _BaseAlpha: 1
+    - _BaseCutOff: 0.135
+    - _BaseThickness: 0.07
+    - _BumpScale: 1
+    - _CutOut: 0.072
+    - _Cutoff: 0.2
+    - _CutoffEnd: 0.7
+    - _Cutout: 0.01
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EdgeFade: 0.3
+    - _EmissiveMul: 0.225
+    - _EnviroBlur: 1
+    - _FurLength: 0.3
+    - _GlobalEmission: 0.02
+    - _GlossMapScale: 1
+    - _Glossiness: 0.139
+    - _GlossyReflections: 1
+    - _GravityStrength: 0.35
+    - _GravityTexStrength: 0.25
+    - _LightSmooth: 0.05
+    - _LightThick: 0.15
+    - _MaxAlpha: 0.5
+    - _MaxEmissive: 0.967
+    - _Metallic: 0.264
+    - _MinAlpha: 0.1
+    - _MinEmissive: 0.921
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _PointEmissive: 0.722
+    - _PointEmissiveMul: 1
+    - _PosMultiplier: 0
+    - _SmoothEmissive: 0.013
+    - _SmoothThick: 0.6
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _ThickEmissive: 0.02
+    - _UVSec: 0
+    - _UvMultiplier: 2.5
+    - _VelStrength: 0.125
+    - _ZWrite: 1
+    - _timeMultiplier: 0.1
+    m_Colors:
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Gravity: {r: 0, g: -1, b: 0, a: 0}
+    - _Roughness: {r: 1, g: 1, b: 1, a: 1}
+    - _Tiles: {r: 1, g: 1, b: 0, a: 0}
+    - _TilesFur: {r: 2, g: 2, b: 0, a: 0}

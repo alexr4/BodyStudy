@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_28
+  m_Shader: {fileID: 4800000, guid: 141707d1c2cc6274f9851c629e2d3633, type: 3}
+  m_ShaderKeywords: _ISCONTROLLDBYINSTANCE_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - MainTex:
+        m_Texture: {fileID: 2800000, guid: fff432b198aa1f746a0b3beaa72e97a4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AO:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlbedoRamp:
+        m_Texture: {fileID: 2800000, guid: c966b9ec9f7171b4f976c013f08de1f7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: baa73025854ba2f43ad9e6ba85161ccd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cube:
+        m_Texture: {fileID: 8900000, guid: 640f2359ffd81514aa1847a04c4d7226, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: c3712c6ef439a02459b06e38f3ddd24e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metallic:
+        m_Texture: {fileID: 2800000, guid: daea7d7e422ebfd41852bad6e632a81a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 2800000, guid: 13c752e1f0eb90c43b02259be32c10f8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RampLight:
+        m_Texture: {fileID: 2800000, guid: c0c4bb5f822e2e3429380dd10fb4ccb0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Roughness:
+        m_Texture: {fileID: 2800000, guid: e68386498464ee14eb4917d7199fc68c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _nTex:
+        m_Texture: {fileID: 2800000, guid: e6fa85e2dd9664742886775c1d88f169, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _nTex2:
+        m_Texture: {fileID: 2800000, guid: 2b405c29b86fd314ab46842c20a3a78f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _posTex:
+        m_Texture: {fileID: 2800000, guid: 9b29230e9011ead4faefd87d045390f5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _posTex2:
+        m_Texture: {fileID: 2800000, guid: 2118ae62587251747a3a8dd5687f2312, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlbedoEmission: 0.025
+    - _AlphaTest: 0.25
+    - _BumpScale: 1
+    - _CutOut: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EmissiveMul: 0.225
+    - _EnviroBlur: 0.6
+    - _GlobalEmission: 0.035
+    - _GlossMapScale: 1
+    - _Glossiness: 0
+    - _GlossyReflections: 1
+    - _GlowEmission: 0.414
+    - _MaxAlpha: 0.5
+    - _MaxEmissive: 0.967
+    - _MetalInc: 0.25
+    - _Metallic: 0.748
+    - _MinAlpha: 0.1
+    - _MinEmissive: 0.921
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _PointEmissive: 0.722
+    - _PointEmissiveMul: 1
+    - _RampY: 0.75
+    - _RoughInc: 0.5
+    - _SmoothEmissive: 0.013
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _ThickEmissive: 0.02
+    - _TimeControl: 0.295
+    - _UVSec: 0
+    - _ZWrite: 1
+    - _boundingMax: 0.051053554
+    - _boundingMax2: 0.030560382
+    - _boundingMin: -0.060066834
+    - _boundingMin2: -0.017961789
+    - _isControlldByInstance: 1
+    - _numOfFrames: 99
+    - _pack_normal: 0
+    - _speed: 0.24
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Roughness: {r: 1, g: 1, b: 1, a: 1}
