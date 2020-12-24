@@ -1,24 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!95 &4627846780257296755
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5546187275879509540}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4473b6c50d0097d469950ace2ca712e4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4627846780357887190
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,9 +48,10 @@ MonoBehaviour:
   mixamoRigList:
   - {fileID: 5166705597636588702}
   offsetPerVert: 1
-  showBonesGizmos: 1
+  showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &4627846780357887187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInstance: 500
-  world: {x: 1, y: 5, z: 1}
+  world: {x: 1, y: 1, z: 1}
   mesh: {fileID: 5148151641114397957, guid: 4cd56d98379be0d49889bbfe15614bb8, type: 3}
   isRand: 1
   minScale: 0.5
@@ -110,6 +92,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 32f81098b0b2159469d36eff209f70e0, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
 --- !u!1 &4627846780645422905
 GameObject:
@@ -143,6 +126,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4627846780257296755
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5546187275879509540}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4473b6c50d0097d469950ace2ca712e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &4627846780465959797
 PrefabInstance:
   m_ObjectHideFlags: 0

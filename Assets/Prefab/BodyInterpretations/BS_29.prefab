@@ -68,9 +68,10 @@ MonoBehaviour:
   mixamoRigList:
   - {fileID: 5366234268808236402}
   offsetPerVert: 1
-  showBonesGizmos: 1
+  showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &5616561441468038463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInstance: 60000
-  world: {x: 2, y: 4, z: 2}
+  world: {x: 2, y: 1, z: 2}
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   isRand: 1
   minScale: 0.0025
@@ -111,6 +112,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 43a01918cdb73aa4386dbf098cd52b96, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
   minOffset: 0.05
   maxOffset: 0.01
@@ -127,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInstance: 5000
-  world: {x: 2, y: 4, z: 2}
+  world: {x: 2, y: 1, z: 2}
   mesh: {fileID: -2432090755550338912, guid: ffb34530accb55242aa1399748a4b55c, type: 3}
   isRand: 1
   minScale: 0.5
@@ -141,6 +143,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 43a01918cdb73aa4386dbf098cd52b96, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
   minOffset: 0.05
   maxOffset: 0.01

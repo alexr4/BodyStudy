@@ -71,9 +71,10 @@ MonoBehaviour:
   mixamoRigList:
   - {fileID: 601898824768283945}
   offsetPerVert: 1
-  showBonesGizmos: 1
+  showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &1139664381744092516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +115,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: d585c89f055fcc1418a29887011bbdbb, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
   wind: {x: 0, y: 1, z: 0}
 --- !u!114 &1139664381744092521
@@ -143,6 +145,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: d585c89f055fcc1418a29887011bbdbb, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
   wind: {x: 0, y: 1, z: 0}
 --- !u!114 &1139664381744092520
@@ -172,6 +175,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: d585c89f055fcc1418a29887011bbdbb, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
   wind: {x: 0, y: 1, z: 0}
 --- !u!114 &1139664381744092519
@@ -201,6 +205,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: d585c89f055fcc1418a29887011bbdbb, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
   wind: {x: 0, y: 1, z: 0}
 --- !u!114 &1139664381744092515
@@ -230,6 +235,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: d585c89f055fcc1418a29887011bbdbb, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
   wind: {x: 0, y: 1, z: 0}
 --- !u!1 &1139664382890695276

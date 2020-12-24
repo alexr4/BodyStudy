@@ -102,6 +102,7 @@ MonoBehaviour:
   showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &807433563845190159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +143,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: fa26a51d07307414580af43970b2c016, type: 3}
+  refTransform: {fileID: 0}
 --- !u!1001 &807433563733063081
 PrefabInstance:
   m_ObjectHideFlags: 0

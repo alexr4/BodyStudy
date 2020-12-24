@@ -32,25 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &5806181162601324181
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6652620188931297730}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4473b6c50d0097d469950ace2ca712e4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5806181162769169200
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,9 +81,10 @@ MonoBehaviour:
   mixamoRigList:
   - {fileID: 6276059083550739320}
   offsetPerVert: 1
-  showBonesGizmos: 1
+  showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &5806181162769169205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInstance: 40000
-  world: {x: 2, y: 1.8, z: 2}
+  world: {x: 1, y: 1, z: 1}
   mesh: {fileID: -2432090755550338912, guid: ef2b27219753f0d459203a76e5f41600, type: 3}
   isRand: 1
   minScale: 0.02
@@ -143,6 +125,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 3b58240d846b9304f8295e09937bcfb1, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 3d76d0502b856a94e948c2c339081450, type: 3}
   wind: {x: 0, y: 0, z: -1}
 --- !u!114 &5806181162769169202
@@ -158,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInstance: 10000
-  world: {x: 2, y: 1.8, z: 2}
+  world: {x: 1, y: 1, z: 1}
   mesh: {fileID: -2432090755550338912, guid: ef2b27219753f0d459203a76e5f41600, type: 3}
   isRand: 1
   minScale: 0.03
@@ -172,8 +155,28 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 8d35295a5cea28f4394002acd456181e, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 3d76d0502b856a94e948c2c339081450, type: 3}
   wind: {x: 0, y: 0, z: 0}
+--- !u!95 &5806181162601324181
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6652620188931297730}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4473b6c50d0097d469950ace2ca712e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &5806181163481083027
 PrefabInstance:
   m_ObjectHideFlags: 0

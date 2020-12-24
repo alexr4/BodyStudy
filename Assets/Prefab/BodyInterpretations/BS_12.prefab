@@ -70,6 +70,7 @@ MonoBehaviour:
   showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &782419679391783978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +111,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: b261246db74410044acb28a516d714b1, type: 3}
+  refTransform: {fileID: 0}
 --- !u!1 &1304382684361100462
 GameObject:
   m_ObjectHideFlags: 0

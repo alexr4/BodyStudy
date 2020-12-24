@@ -72,6 +72,7 @@ MonoBehaviour:
   showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &5677363561011022556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +113,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 9cfc9b9b16d5025459e8ceea2c36761c, type: 3}
+  refTransform: {fileID: 0}
 --- !u!114 &5677363561011022559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +141,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 9cfc9b9b16d5025459e8ceea2c36761c, type: 3}
+  refTransform: {fileID: 0}
 --- !u!114 &5677363561011022555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +169,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 9cfc9b9b16d5025459e8ceea2c36761c, type: 3}
+  refTransform: {fileID: 0}
 --- !u!1 &5677363561720153559
 GameObject:
   m_ObjectHideFlags: 0

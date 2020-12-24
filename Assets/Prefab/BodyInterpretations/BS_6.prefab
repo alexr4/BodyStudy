@@ -83,6 +83,7 @@ MonoBehaviour:
   showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &6141114135679740660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInstance: 20000
-  world: {x: 2, y: 4, z: 2}
+  world: {x: 1, y: 1, z: 1}
   mesh: {fileID: -2432090755550338912, guid: 83746f43506d79044b0b0bc634c268fd, type: 3}
   isRand: 1
   minScale: 0.015
@@ -123,6 +124,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 0772d95fdb7a72e41993d569232df1df, type: 3}
+  refTransform: {fileID: 0}
 --- !u!95 &6141114135713353556
 Animator:
   serializedVersion: 3

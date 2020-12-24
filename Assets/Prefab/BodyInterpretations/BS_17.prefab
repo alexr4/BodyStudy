@@ -48,9 +48,10 @@ MonoBehaviour:
   mixamoRigList:
   - {fileID: 2792107923390751584}
   offsetPerVert: 1
-  showBonesGizmos: 1
+  showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &2392878295337014061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,27 +92,9 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: f4cdfe2e5e3b9df4d83c846a0a1c6b59, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
   wind: {x: 0, y: 0, z: -1}
---- !u!95 &2392878295571969677
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3311377112282315226}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4473b6c50d0097d469950ace2ca712e4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2975283747976035338
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +127,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2392878295571969677
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311377112282315226}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4473b6c50d0097d469950ace2ca712e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2392878294711075979
 PrefabInstance:
   m_ObjectHideFlags: 0

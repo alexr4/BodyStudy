@@ -13,9 +13,6 @@ GameObject:
   - component: {fileID: 2521702734150984674}
   - component: {fileID: 2521702734150984679}
   - component: {fileID: 2521702734150984680}
-  - component: {fileID: 2521702734150984677}
-  - component: {fileID: 2521702734150984681}
-  - component: {fileID: 2521702734150984678}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -77,7 +74,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 0
+  m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!81 &2521702734150984674
@@ -100,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 2521702734150984676}
+  volumeTrigger: {fileID: 0}
   volumeLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -162,51 +159,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 20
---- !u!114 &2521702734150984677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2521702734150984673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a66fbd5ffe9b9d64da304996f1919f40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _width: 1080
-  _height: 1080
-  _preset: 0
-  _frameRate: 30
-  autoExport: 0
-  filename: Test
-  exportFolder: D:\_CLOUD\R&D\Codevember2020
---- !u!114 &2521702734150984681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2521702734150984673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0b27317096e672448b2937d7d668274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionPlane: {fileID: 0}
-  floorMaterial: {fileID: 2100000, guid: 45e78a62129a9e44eba5c3d802367513, type: 2}
---- !u!114 &2521702734150984678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2521702734150984673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7abb10dd13839864baf966f44d548f39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _senderName: Unity3D
-  _sourceTexture: {fileID: 0}
-  _alphaSupport: 0

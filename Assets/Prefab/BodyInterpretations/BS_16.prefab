@@ -67,9 +67,10 @@ MonoBehaviour:
   mixamoRigList:
   - {fileID: 4307047262190321325}
   offsetPerVert: 1
-  showBonesGizmos: 1
+  showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &4345707382666448608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +111,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 6a69c2b9ac4406448a09913486e63f4c, type: 3}
+  refTransform: {fileID: 0}
 --- !u!1 &4345707384254875983
 GameObject:
   m_ObjectHideFlags: 0

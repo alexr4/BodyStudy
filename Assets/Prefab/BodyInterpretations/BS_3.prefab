@@ -45,7 +45,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9163632011936668198}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -70,6 +70,7 @@ MonoBehaviour:
   showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &9163632011936668195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInstance: 5000
-  world: {x: 2, y: 4, z: 2}
+  world: {x: 1, y: 1, z: 1}
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   isRand: 1
   minScale: 0.01
@@ -110,6 +111,7 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 73fd921b4eaa33d4a81fa5697181254c, type: 3}
+  refTransform: {fileID: 0}
   wind: {x: 0, y: 0, z: -1}
 --- !u!1 &9163632012742382051
 GameObject:

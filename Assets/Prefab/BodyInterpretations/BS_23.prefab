@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &7878232525389478358
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7031371827762542209}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4473b6c50d0097d469950ace2ca712e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7878232524508016205
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,9 +99,10 @@ MonoBehaviour:
   mixamoRigList:
   - {fileID: 7701053937013091387}
   offsetPerVert: 1
-  showBonesGizmos: 1
+  showBonesGizmos: 0
   showNormalsGizmos: 0
   normalOffset: 1
+  showBound: 0
 --- !u!114 &7878232525221764214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInstance: 75
-  world: {x: 2, y: 1.8, z: 2}
+  world: {x: 1, y: 1, z: 1}
   mesh: {fileID: -2432090755550338912, guid: 3cb91b00c69195e428dcfe837d933eaf, type: 3}
   isRand: 1
   minScale: 0.25
@@ -123,26 +143,8 @@ MonoBehaviour:
   posList: []
   normList: []
   compute: {fileID: 7200000, guid: 9a9326bbb763e47438c6ae7c670e1175, type: 3}
+  refTransform: {fileID: 0}
   bodyramp: {fileID: 2800000, guid: 43b2320f2b35662439794f606a51f9b6, type: 3}
---- !u!95 &7878232525389478358
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7031371827762542209}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4473b6c50d0097d469950ace2ca712e4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &7878232524511808464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -173,17 +175,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5d484bd384dd0954c95ec85e920a2002,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5d484bd384dd0954c95ec85e920a2002,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5d484bd384dd0954c95ec85e920a2002,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5d484bd384dd0954c95ec85e920a2002,
         type: 3}
