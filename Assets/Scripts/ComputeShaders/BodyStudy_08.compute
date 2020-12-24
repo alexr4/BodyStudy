@@ -24,10 +24,10 @@ uniform float _Smoothness;
 uniform float _IsTimeInverted;
 
 // For the sake of simplicity, only using 1000, 1, 1 threads.
-[numthreads(1, 1, 1)]
+[numthreads(64, 1, 1)]
 void CSMain (uint3 id : SV_DispatchThreadID) {
 
-      float4x4 trmat  = _Properties[id.x].trmat;
+    float4x4 trmat  = _Properties[id.x].trmat;
     float4x4 oscmat = _Properties[id.x].oscmat;
     float4x4 scmat  = _Properties[id.x].scmat;
     float3 ascale   = float3(scmat[0][0], scmat[1][1], scmat[2][2]);
@@ -56,17 +56,17 @@ void CSMain (uint3 id : SV_DispatchThreadID) {
     position            += rndPos * rndPosScale;
     opos                += rndPos * rndInstance;
 
-    float normy         = position.y / 2.0;
+    float normy         = position.y / _World.y;
     float normYEdges    = lerp(0 - _Thickness - _Smoothness, 1 + _Thickness + _Smoothness, normTime);
     
-    float newScale      = smoothstep(normYEdges - _Thickness - _Smoothness, normYEdges - _Thickness, normy) * 
+    float scaler        = smoothstep(normYEdges - _Thickness - _Smoothness, normYEdges - _Thickness, normy) * 
                           (1.0 - smoothstep(normYEdges + _Thickness, normYEdges + _Thickness + _Smoothness, normy));
     if(_IsTimeInverted == 1){
-        newScale = 1.0 - newScale;
+        scaler = 1.0 - scaler;
     }
     // normy               = outCubic(normy);
     // normy               = lerp(0.35, 1.5, normy);
-    // float3 newScale     = oscale * float3(normy, normy, normy);
+    float3 newScale     = oscale * float3(scaler, scaler, scaler);
 
     //rotate shape on a curl noise
     
@@ -89,10 +89,11 @@ void CSMain (uint3 id : SV_DispatchThreadID) {
         0, 0, 0, 1
     );
 
+    
     float4x4 scale = float4x4(
-        newScale, 0, 0, 0,
-        0, newScale, 0, 0,
-        0, 0, newScale, 0,
+        newScale.x, 0, 0, 0,
+        0, newScale.y, 0, 0,
+        0, 0, newScale.z, 0,
         0, 0, 0, 1
     );
 

@@ -40,7 +40,7 @@ float3 seek(float3 target, float3 position, float3 vel, float maxForce, float ma
 
 float3 separate(int id, float3 position, float3 vel, float3 size, float maxForce, float maxSpeed){
     //separation
-    float minDist   = 0.035;
+    float minDist   = 0.035 * noise(_Time);;
     float3 sep              = float3(0, 0, 0);
     int count               = 0;
     for(int i=0; i<int(_MaxInstance); i++){
@@ -80,7 +80,7 @@ float3 separate(int id, float3 position, float3 vel, float3 size, float maxForce
 }
 
 float3 align(int id, float3 position, float3 vel, float maxForce, float maxSpeed){
-    float minDist   = 0.05;
+    float minDist   = 0.035 * noise(_Time);
     float3 sum      = float3(0, 0, 0);
     float count     = 0;
     for(int i=0; i<int(_MaxInstance); i++){
@@ -110,7 +110,7 @@ float3 align(int id, float3 position, float3 vel, float maxForce, float maxSpeed
 }
 
 float3 cohesion(int id, float3 position, float3 vel, float maxForce, float maxSpeed){
-    float minDist   = 0.05;
+    float minDist   = 0.05 * noise(_Time);;
     float3 sum      = float3(0, 0, 0);
     float count     = 0;
     for(int i=0; i<int(_MaxInstance); i++){
@@ -136,7 +136,7 @@ float3 cohesion(int id, float3 position, float3 vel, float maxForce, float maxSp
 
 
 // For the sake of simplicity, only using 1000, 1, 1 threads.
-[numthreads(1, 1, 1)]
+[numthreads(64, 1, 1)]
 void CSMain (uint3 id : SV_DispatchThreadID) {
     float4x4 trmat          = _Properties[id.x].trmat;
     float4x4 rotation       = _Properties[id.x].rotmat;
@@ -160,7 +160,7 @@ void CSMain (uint3 id : SV_DispatchThreadID) {
     float isAnimated        = step(0.75, rndPerLoop);
 
     // //size management
-    float normy         = saturate(opos.y / 1.8);
+    float normy         = saturate(opos.y / _World.y);
     uint3 uvramp        = uint3(normy * _RampSize.x, 0.5 * _RampSize.y, 0);
     float rampSize      = _BodyRamp.Load(uvramp);
  
@@ -197,23 +197,24 @@ void CSMain (uint3 id : SV_DispatchThreadID) {
     
     float noisedCol         = noise(opos.xyz * 4.0 + opos.w);
 
-    // acc                 += steer * 4.0;
-    acc                 += sep * 1.5;
-    acc                 += ali * 2.5;
-    acc                 += cohe * 2.75;
-    acc                 += curl * curlScale;
+    acc                 += steer * 0.001;
+    acc                 += sep * 0.00125;
+    acc                 += ali * 0.0025;
+    acc                 += cohe * 0.25;
+    acc                 += curl * curlScale * 0.001;
     
     vel                 += acc;
-    vel           = (length(vel) > minmaxSpeed) ? normalize(vel) * minmaxSpeed : vel;
-    position            += vel * 0.1;
+    vel                 = (length(vel) > minmaxSpeed) ? normalize(vel) * minmaxSpeed : vel;
+    position            += vel;// * 0.1;
     acc                 *= 0.0;
+
 
     //edge
     float3 subPos   = position - pivot;
     if(position.x < pivot.x - _World.x * 0.5
     || position.x > pivot.x + _World.x * 0.5
     || position.y < pivot.y + 0
-    || position.y > pivot.y + _World.y * 0.5
+    || position.y > pivot.y + _World.y
     || position.z < pivot.z - _World.z * 0.5
     || position.z > pivot.z + _World.z * 0.5 ){
         position = mul(_TRS, float4(_Position[index].xyz, 1)).xyz;

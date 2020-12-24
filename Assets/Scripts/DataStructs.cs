@@ -62,4 +62,14 @@ namespace Com.BonjourLab{
                 sizeof(float) * 4; // colors
         }
     }
+
+    public struct TransformProperties{
+        public UnityEngine.Vector3 gravityCenter;
+        public UnityEngine.Vector3 size;
+        public static int Size(){
+            return
+                sizeof(float) * 3 +
+                sizeof(float) * 3;
+        }
+    }
 }

@@ -61,6 +61,7 @@
         float _AlbedoEmission;
         float _AlphaTest;
         float _RoughnessInc;
+        uniform float3 _World;
 
           
         float luma(float3 color) {
@@ -74,7 +75,7 @@
             
             float dividerx   = 4.0;
             float offsetx    = 1.0 / dividerx;
-            float normy      = IN.pos.y / 1.8;
+            float normy      = IN.pos.y / _World.y;
 
             float uvy        = (IN.uv_MainTex.y / dividery) + floor(IN.pos.w * dividery) * offsety;
             float uvx        = (IN.uv_MainTex.x / dividerx) + floor(normy * dividerx) * offsetx;

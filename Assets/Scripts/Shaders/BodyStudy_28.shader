@@ -111,7 +111,7 @@
 
 
             // Metallic and smoothness come from slider variables
-            o.Albedo        = argb * IN.color.rgb * ramp + anormal * 0.15;
+            o.Albedo        = argb * IN.color.rgb + ramp * .25 + anormal * 0.15;
             o.Normal        = anormal;
             o.Metallic      = ametal.r * _MetalInc;
             o.Smoothness    = arough.r * _RoughInc;

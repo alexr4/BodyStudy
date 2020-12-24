@@ -47,6 +47,8 @@ namespace Com.BonjourLab{
                 GPUMeshController gpumeshcontrolleri = gpuMeshController[i];
                 gpumeshcontrolleri.posList           = mixamoRigController.mixamoVert3List[0];
                 gpumeshcontrolleri.normList          = mixamoRigController.mixamoNormal3List[0];
+                gpumeshcontrolleri.refTransform      = mixamoRigController.mixamoRigList[0];
+                gpumeshcontrolleri.trsProperties     = mixamoRigController.GetTransformProperties(0);
 
                 gpumeshcontrolleri.Initialize();
                 gpumeshcontrolleri.BindVectorArray(mixamoRigController.mixamoVert3List[0]);
@@ -62,6 +64,8 @@ namespace Com.BonjourLab{
                 gpumeshcontrolleri.maxInstance          = mixamoRigController.mixamoRig3PositionList[0].Count;
                 gpumeshcontrolleri.posList              = mixamoRigController.mixamoRig3PositionList[0];
                 gpumeshcontrolleri.normList             = mixamoRigController.mixamoRig3PositionList[0];
+                gpumeshcontrolleri.refTransform         = mixamoRigController.mixamoRigList[0];
+                gpumeshcontrolleri.trsProperties        = mixamoRigController.GetTransformProperties(0);
 
                 gpumeshcontrolleri.Initialize();
                 gpumeshcontrolleri.BindVectorArray(mixamoRigController.mixamoRig3PositionList[0]);

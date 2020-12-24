@@ -61,6 +61,12 @@ namespace Com.BonjourLab{
         Thoses three steps helps manage Disable/Enable activity to rinit Compute Shader and buffer when calling SetActive(true/false)
         whithout returning en error at Start (OnEnable called only after Awake)
         */
+        protected float savedTime;
+
+        //Decomposed TRS from based mesh
+        [HideInInspector] public Transform refTransform;
+        [HideInInspector] public TransformProperties trsProperties;
+        protected Vector3 toGravityCenter;
 
         public void Initialize(){
             // Boundary surrounding the meshes we will be drawing.  Used for occlusion.
@@ -90,13 +96,28 @@ namespace Com.BonjourLab{
 
             argsBuffer = new ComputeBuffer(1, args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
             argsBuffer.SetData(args);
+            
+            // scale modeldesc to ref world TRS
+            modelDescription = new Vector3( modelDescription.x * refTransform.lossyScale.x,
+                                            modelDescription.y * refTransform.lossyScale.y,
+                                            modelDescription.z * refTransform.lossyScale.z);
+
+            // scale world to fit model
+            world           = new Vector3(  world.x * trsProperties.size.x,
+                                            world.y * trsProperties.size.y,
+                                            world.z * trsProperties.size.z); 
+
+            //get local transform to gravity center
+            toGravityCenter = trsProperties.gravityCenter - transform.position;
 
             SetBasedInstanceData(); //Set based data for instance
             
             compute.SetBuffer(kernel, "_Properties", meshPropertiesBuffer); //Bind properties buffer to Compute Shader
             material.SetBuffer("_Properties", meshPropertiesBuffer); //Bind Properties buffer Directly to the material (GPU communication)
+            material.SetVector("_World", world);
             
             BindBasedDataToComputeShader(); //Bind global variable to Compute Shader
+            BindUpdatedDataToComputeShader();//Bind first update of real time datas
         }
 
         public virtual void SetBasedInstanceData(){
@@ -124,7 +145,7 @@ namespace Com.BonjourLab{
                     Quaternion rndRat   = Quaternion.Euler(Random.Range(-180, 180) * maxRndRotation, Random.Range(-180, 180) * maxRndRotation, Random.Range(-180, 180) * maxRndRotation);
                     rotation *= rndRat;
                 }
-
+                
                 Vector3 scale           = Random.Range(this.minScale, this.maxScale) * modelDescription;
                 
                 props.trmat             = Matrix4x4.Translate(position);
@@ -142,11 +163,12 @@ namespace Com.BonjourLab{
         }
 
         public virtual void BindBasedDataToComputeShader(){
+            savedTime   = Time.fixedTime;
             compute.SetVector("_World", world); 
         }
 
         public virtual void BindUpdatedDataToComputeShader(){
-            compute.SetFloat("_Time", Time.fixedTime);
+            compute.SetFloat("_Time", Time.fixedTime - savedTime);
             compute.SetFloat("_MaxScale", maxScale);
             compute.SetFloat("_MinScale", minScale);
             compute.SetVector("_ModelDescription", modelDescription);
@@ -154,13 +176,13 @@ namespace Com.BonjourLab{
 
         public void Compute() {
             BindUpdatedDataToComputeShader();
-            compute.Dispatch(kernel, maxInstance/1, 1, 1);
+            compute.Dispatch(kernel, Mathf.CeilToInt(maxInstance/64f), 1, 1);
             Graphics.DrawMeshInstancedIndirect(mesh, 0, material, bounds, argsBuffer);
         }
 
         protected void OnDrawGizmos() {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(transform.position, world);
+            Gizmos.DrawWireCube(transform.position + toGravityCenter, world);
         }
 
         private void OnDisable() {

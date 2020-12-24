@@ -21,7 +21,7 @@ uniform Texture2D<float4> _BodyRamp;
 uniform float2 _RampSize;
 
 // For the sake of simplicity, only using 1000, 1, 1 threads.
-[numthreads(1, 1, 1)]
+[numthreads(64, 1, 1)]
 void CSMain (uint3 id : SV_DispatchThreadID) {
     float4x4 trmat          = _Properties[id.x].trmat;
     float4x4 rotation       = _Properties[id.x].rotmat;
@@ -54,11 +54,14 @@ void CSMain (uint3 id : SV_DispatchThreadID) {
 
 
     // //size management
-    float normy         = saturate(opos.y / 1.8);
+    float normy         = saturate(opos.y / _World.y);
     uint3 uvramp        = uint3(normy * _RampSize.x, 0.5 * _RampSize.y, 0);
     float rampSize      = _BodyRamp.Load(uvramp);
  
     float3 size         = _MinScale + float3(rampSize, rampSize, rampSize) * (_MaxScale - _MinScale);
+    size.x              *= _ModelDescription.x;
+    size.y              *= _ModelDescription.y;
+    size.z              *= _ModelDescription.z;
 
     
     /*

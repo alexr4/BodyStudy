@@ -30,6 +30,7 @@ uniform float _BaseThickness;
 uniform float _NoiseFurBased;
 uniform float _NoiseFurThick;
 uniform float _NoiseFurSmooth;
+uniform float3 _World;
 
 uniform fixed3 _Gravity;
 uniform float _GravityStrength;
@@ -155,7 +156,7 @@ void surf(Input IN, inout SurfaceOutputStandard o){
 
     float noiseGrey = noise(float3(IN.uv_MainTex.xy, 1.0) * _UvMultiplier + IN.pos.xyz * _PosMultiplier + float3(0, 0, _Time.y * _timeMultiplier)) * 0.5 + 0.5;
     
-    float normy     = saturate(IN.pos.y / 1.8);
+    float normy     = saturate(IN.pos.y / _World.y);
     fixed4 ramp     = tex2D(_Ramp, float2(FUR_MULTIPLIER * noiseGrey, normy));
 
     // float light         = smoothstep(normtime - _LightThick * 0.5 - _LightSmooth, normtime - _LightThick * 0.5, FUR_MULTIPLIER) * 

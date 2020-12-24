@@ -19,7 +19,7 @@ uniform float _Time;
 uniform float4x4 _TRS;
 
 // For the sake of simplicity, only using 1000, 1, 1 threads.
-[numthreads(1, 1, 1)]
+[numthreads(64, 1, 1)]
 void CSMain (uint3 id : SV_DispatchThreadID) {
 
     float4x4 trmat  = _Properties[id.x].trmat;
@@ -69,6 +69,9 @@ void CSMain (uint3 id : SV_DispatchThreadID) {
 
     float3 newOriScale  = (_MinScale + randPerLoop * (_MaxScale - _MinScale)) * float3(1, 1, 1);
     float3 size         = newOriScale * easedGrowth;
+    size.x              *= _ModelDescription.x;
+    size.y              *= _ModelDescription.y;
+    size.z              *= _ModelDescription.z;
 
     position            =  mul(_TRS, float4(position, 1)).xyz;
     float4x4 transform      = float4x4(

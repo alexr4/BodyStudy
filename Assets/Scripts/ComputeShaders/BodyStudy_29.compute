@@ -28,7 +28,7 @@ uniform float _MinOffset;
 uniform float _MaxOffset;
 
 // For the sake of simplicity, only using 1000, 1, 1 threads.
-[numthreads(1, 1, 1)]
+[numthreads(64, 1, 1)]
 void CSMain (uint3 id : SV_DispatchThreadID) {
     float4x4 trmat          = _Properties[id.x].trmat;
     float4x4 rotation       = _Properties[id.x].rotmat;
@@ -67,7 +67,12 @@ void CSMain (uint3 id : SV_DispatchThreadID) {
     // //size management
     float sizeInc       = (aloop % 2 == 0) ? smoothstep(0.0, 0.1, normTime) : (1.0 - smoothstep(0.75, 1, normTime));
     sizeInc             = outQuad(sizeInc);
-    float3 size         = (_MinScale + sizeInc * (_MaxScale - _MinScale)) * float3(1, 1, 1);
+    float3 size         = (_MinScale + sizeInc * (_MaxScale - _MinScale));
+    
+    size.x              *= _ModelDescription.x;
+    size.y              *= _ModelDescription.y;
+    size.z              *= _ModelDescription.z;
+    
     float noisedCol     = noise(_Time * 0.25);
     float noisedShade   = noise(opos.xyz * 4.5 + _Time * 0.25);
   

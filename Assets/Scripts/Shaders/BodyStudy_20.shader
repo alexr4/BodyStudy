@@ -63,6 +63,7 @@
         float _AlbedoEmission;
         float _AlphaTest;
         float _RampY;
+        uniform float3 _World;
 
           
         float luma(float3 color) {
@@ -75,12 +76,12 @@
             fixed4 argb     = tex2D (_MainTex, frac(IN.uv_MainTex));
             fixed4 arough   = tex2D (_Roughness, frac(IN.uv_MainTex));
             float3 anormal  = UnpackNormal(tex2D (_BumpMap, IN.uv_BumpMap));
-            fixed4 _ramp    = tex2D(_AlbedoRamp, float2(saturate(IN.pos.y / 1.8), IN.pos.w));
+            fixed4 _ramp    = tex2D(_AlbedoRamp, float2(saturate(IN.pos.y / _World.y), IN.pos.w));
 
             // pos                 = pos * 2.0 - 1.0;
             // float circleSDF     = frac(length(pos) * 10.0);
             float3 pos          = float3(0, 1, 0) - IN.pos.xyz;
-            float sphereSDF     = frac(sdSphere(pos, 1.8 / 2.0, 0.0).x * 0.75);
+            float sphereSDF     = frac(sdSphere(pos, _World.y, 0.0).x * 0.75);
             float aniSphereSDF  = frac(sphereSDF - _Time.y * 0.35);
             _ramp               = tex2D(_AlbedoRamp, float2(aniSphereSDF, 0.5));
 

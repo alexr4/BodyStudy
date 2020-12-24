@@ -19,7 +19,7 @@ uniform float _Time;
 uniform float4x4 _TRS;
 
 // For the sake of simplicity, only using 1000, 1, 1 threads.
-[numthreads(1, 1, 1)]
+[numthreads(64, 1, 1)]
 void CSMain (uint3 id : SV_DispatchThreadID) {
 
     float4x4 trmat  = _Properties[id.x].trmat;
@@ -52,7 +52,7 @@ void CSMain (uint3 id : SV_DispatchThreadID) {
     position            += rndPos * rndPosScale;
     opos                += rndPos * rndPosScale;
 
-    float normy         = 1.0 - (opos.y / 2.0);
+    float normy         = 1.0 - (opos.y / _World.y);
     normy               = outCubic(normy);
     normy               = lerp(0.35, 1.5, normy);
     float3 newScale     = oscale * float3(normy, normy, normy);
@@ -65,6 +65,7 @@ void CSMain (uint3 id : SV_DispatchThreadID) {
         0, 0, 0, 1
     );
 
+    float3 decomposeScaleFromTRS = float3(_TRS[0][0], _TRS[1][1], _TRS[2][2]);
     float4x4 scale = float4x4(
         newScale.x, 0, 0, 0,
         0, newScale.y, 0, 0,
