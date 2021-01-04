@@ -6,11 +6,11 @@ Codevember is a coding challenge proposing to create a creative coding experimen
 Once again, in 2020, I’ve tried it, but this year was quite different. I’ve streamed each experiment on instagram and on twitch. 
 I’ve also followed some rules to keep it simple and iterate more, which were the following:
 
-• Plateform: Unity3D
-• Theme: Body interpretation
-• Exploring shading, compute shadersand more...
-• Try to use colors ;)
-• Keep each stream between 3h - 4h
+* Plateform: Unity3D
+* Theme: Body interpretation
+* Exploring shading, compute shaders and more...
+* Try to use colors ;)
+* Keep each stream between 3h - 4h
 
 Please, keep in mind this was an experiment done in a few hours. It was not meant to be a tutorial and you might find some errors/bugs.
 
