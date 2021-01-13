@@ -124,6 +124,6 @@ MonoBehaviour:
   renderShadows: 1
   shadowDistance: 20
   maxPixelLights: -1
-  clearColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  clearColor: {r: 0, g: 0, b: 0, a: 1}
   renderingPath: -1
   ssnap: 0

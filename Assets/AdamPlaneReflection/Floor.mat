@@ -65,7 +65,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 0.8
-    - _Glossiness: 0.9
+    - _Glossiness: 0.971
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
@@ -73,7 +73,7 @@ Material:
     - _Parallax: 0.01
     - _PlaneReflectionBumpClamp: 0.15
     - _PlaneReflectionBumpScale: 0.01
-    - _PlaneReflectionIntensityScale: 0.25
+    - _PlaneReflectionIntensityScale: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

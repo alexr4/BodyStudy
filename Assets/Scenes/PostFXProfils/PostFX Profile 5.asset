@@ -1409,6 +1409,7 @@ MonoBehaviour:
   - {fileID: 5890475573219717402}
   - {fileID: -7294447041447589093}
   - {fileID: -3036067441506952995}
+  - {fileID: 5745901570045256568}
 --- !u!114 &11667304244142134
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1579,6 +1580,26 @@ MonoBehaviour:
   vignette:
     overrideState: 1
     value: 0.42
+--- !u!114 &5745901570045256568
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caadcf2b0efcaa4459deadd9ffd953cb, type: 3}
+  m_Name: Flare
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  spectralLut:
+    overrideState: 1
+    value: {fileID: 2800000, guid: f4d1e0b71088cd24ca59dacbfc5083b3, type: 3}
+    defaultState: 1
 --- !u!114 &5890475573219717402
 MonoBehaviour:
   m_ObjectHideFlags: 3

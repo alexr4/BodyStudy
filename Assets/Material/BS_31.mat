@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BS_31-2
-  m_Shader: {fileID: 4800000, guid: 8ea00ec98640ab94e8baec2c1c0c2cdf, type: 3}
-  m_ShaderKeywords: 
+  m_Name: BS_31
+  m_Shader: {fileID: 4800000, guid: 7c9c5a5cd30fa754ab629528ae6473ed, type: 3}
+  m_ShaderKeywords: _ISCONTROLLDBYINSTANCE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
@@ -20,15 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AO:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _AlbedoRamp:
-        m_Texture: {fileID: 2800000, guid: 84b4212183b353141bf6fa0dfb3790c5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9dbeadc1e39b3e543a5e383826c14ffa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 9b8cbd4badc8a5b4b8879b6785cb92a6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4b09292b0d24b8b40884c54bf88400c5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cube:
@@ -52,11 +48,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ba165f32a9e5f7e4db83ff1430aa6f63, type: 3}
+        m_Texture: {fileID: 2800000, guid: 54beb3aedc589c246b695b008e69a307, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
-        m_Texture: {fileID: 2800000, guid: 809898afbead588419aaaf0fa8e6b67a, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -75,48 +71,64 @@ Material:
         m_Texture: {fileID: 2800000, guid: 13c752e1f0eb90c43b02259be32c10f8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _RampLight:
-        m_Texture: {fileID: 2800000, guid: c0c4bb5f822e2e3429380dd10fb4ccb0, type: 3}
+    - _Roughness:
+        m_Texture: {fileID: 2800000, guid: 33b86f36f589db44e90d8c110ec19b9c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Roughness:
-        m_Texture: {fileID: 2800000, guid: 98e15cc2e2cab6c4c9399330b5086545, type: 3}
+    - _posTex:
+        m_Texture: {fileID: 2800000, guid: aa8a320d245640049bea96ed8e3aa882, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _rotTex:
+        m_Texture: {fileID: 2800000, guid: 114f21ed6d943cb4c826c1b542605544, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlbedoEmission: 0.05
-    - _AlphaTest: 1
+    - _AlbedoEmission: 0.115
+    - _AlphaTest: 0.25
     - _BumpScale: 1
-    - _CutOut: 0.6
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EmissiveMul: 0.225
-    - _EnviroBlur: 0.1
+    - _EnviroBlur: 0.4
     - _GlobalEmission: 0.025
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _GlowEmission: 0.414
+    - _MapScale: 0.01
     - _MaxAlpha: 0.5
     - _MaxEmissive: 0.967
-    - _Metallic: 0.748
+    - _Metallic: 0.36
     - _MinAlpha: 0.1
     - _MinEmissive: 0.921
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OposScale: 5
     - _Parallax: 0.02
     - _PointEmissive: 0.722
     - _PointEmissiveMul: 1
-    - _RampY: 0.75
-    - _RoughnessInc: 0.1
+    - _PosScale: 0.05
+    - _RndScale: 5
+    - _RndScale2: 5
     - _SmoothEmissive: 0.013
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _ThickEmissive: 0.02
+    - _TimeControl: 0
+    - _TriplanarNoiseScale: 0.25
     - _UVSec: 0
     - _ZWrite: 1
+    - _boundingMax: 4.2639613
+    - _boundingMax1: 5.140067
+    - _boundingMin: -0.4076059
+    - _boundingMin1: -4.19652
+    - _isControlldByInstance: 1
+    - _numOfFrames: 300
+    - _scaleOffset: 0.25
+    - _speed: 1.2
+    - _timeoffset: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

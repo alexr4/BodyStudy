@@ -44,8 +44,8 @@ namespace Com.BonjourLab
                 props.oscmat            = Matrix4x4.Rotate(rotation);
                 props.color             = Color.Lerp(color0, color1, Random.value);
                 props.opos              = new Vector4(position.x, position.y, position.z, Random.value);
-                props.vel    = new Vector4(0, 0, 0, 0);
-                props.acc    = new Vector4(0, 0, 0, 0);
+                props.vel               = new Vector4(0, 0, 0, 0);
+                props.acc               = new Vector4(0, 0, 0, 0);
                 props.data              = new Vector4(index, 0, 0, Random.value); //x → index, y → Free, z → Free, w → Free
 
                 properties[i] = props;

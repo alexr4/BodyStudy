@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BS_31-4
-  m_Shader: {fileID: 4800000, guid: 0e5dc39b7fd111044b008e9e139c54f2, type: 3}
+  m_Name: BS_30-2
+  m_Shader: {fileID: 4800000, guid: 8ea00ec98640ab94e8baec2c1c0c2cdf, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9b8cbd4badc8a5b4b8879b6785cb92a6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cube:
@@ -52,11 +52,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ba165f32a9e5f7e4db83ff1430aa6f63, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 809898afbead588419aaaf0fa8e6b67a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -80,11 +80,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Roughness:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 98e15cc2e2cab6c4c9399330b5086545, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlbedoEmission: 0.01
+    - _AlbedoEmission: 0.05
     - _AlphaTest: 1
     - _BumpScale: 1
     - _CutOut: 0.6
@@ -92,8 +92,8 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EmissiveMul: 0.225
-    - _EnviroBlur: 1
-    - _GlobalEmission: 0.01
+    - _EnviroBlur: 0.1
+    - _GlobalEmission: 0.025
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
