@@ -177,6 +177,6 @@ void surf(Input IN, inout SurfaceOutputStandard o){
 
     float maskBase      = smoothstep(_BaseCutOff - _BaseThickness * 0.5, _BaseCutOff + _BaseThickness * 0.5, FUR_MULTIPLIER);
 
-    o.Alpha     = (mask * viewDirBlend) * maskBase * IN.color.a * IN.noiseLength;
+    o.Alpha     = (mask * viewDirBlend) * maskBase * IN.noiseLength;// * IN.color.a
     clip(o.Alpha > _CutOut ? 1.0 : -1.0);
 }
