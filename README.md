@@ -51,3 +51,6 @@ Some experiments also use (Vertex Animation Texture)[https://www.sidefx.com/tuto
 ## Licences
 This work is licensed under a [Creative Common Attribution NonCommercial ShareAlike](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+**Important note: This project is shared for educational or R&D purpose. The Art Direction remain the property of BonjourLab.
+If you want to use this project for commercial purpose, please contact the studio for licencing.**
