@@ -43,6 +43,8 @@ namespace Com.BonjourLab{
         protected ComputeBuffer meshPropertiesBuffer;
         protected ComputeBuffer argsBuffer;
         protected ComputeBuffer posBuffer;
+        protected ComputeBuffer normBuffer;
+        protected ComputeBuffer tanBuffer;
 
         [HideInInspector] 
         public List<Vector3> posList;
@@ -213,24 +215,48 @@ namespace Com.BonjourLab{
         }
 
         public void BindVectorArray(List<Vector3> vectorArray){
-            if(posBuffer == null){
-                posBuffer = new ComputeBuffer(vectorArray.Count, sizeof(float) * 3);
-                posBuffer.SetData(vectorArray);
-                compute.SetBuffer(kernel, "_Position", posBuffer);
-                compute.SetInt("_PositionCount", vectorArray.Count);
+            BindVectorArray(ref posBuffer, vectorArray, "_Position", "_PositionCount");
+        }
+
+        public void BindVectorArray(List<Vector4> vectorArray){
+            BindVectorArray(ref posBuffer, vectorArray, "_Position", "_PositionCount");
+        }
+
+        public void BindNormArray(List<Vector3> vectorArray){
+            BindVectorArray(ref normBuffer,vectorArray, "_Normal", "_NormalCount");
+        }
+
+        public void BindNormArray(List<Vector4> vectorArray){
+            BindVectorArray(ref normBuffer,vectorArray, "_Normal", "_NormalCount");
+        }
+
+        public void BindTanArray(List<Vector3> vectorArray){
+            BindVectorArray(ref tanBuffer, vectorArray, "_Tangent", "_TangentCount");
+        }
+
+        public void BindTanArray(List<Vector4> vectorArray){
+            BindVectorArray(ref tanBuffer, vectorArray, "_Tangent", "_TangentCount");
+        }
+
+        public void BindVectorArray(ref ComputeBuffer buffer, List<Vector3> vectorArray, string uniformBuffername, string uniformCountName){
+            if(buffer == null){
+                buffer = new ComputeBuffer(vectorArray.Count, sizeof(float) * 3);
+                buffer.SetData(vectorArray);
+                compute.SetBuffer(kernel, uniformBuffername, buffer);
+                compute.SetInt(uniformCountName, vectorArray.Count);
             }else{
-                posBuffer.SetData(vectorArray);
+                buffer.SetData(vectorArray);
             }
         }
 
-        public void BindVectorArray(List<Vector4> vectorArray){ //G
-            if(posBuffer == null){
-                posBuffer = new ComputeBuffer(vectorArray.Count, sizeof(float) * 4);
-                posBuffer.SetData(vectorArray);
-                compute.SetBuffer(kernel, "_Position", posBuffer);
-                compute.SetInt("_PositionCount", vectorArray.Count);
+        public void BindVectorArray(ref ComputeBuffer buffer, List<Vector4> vectorArray, string uniformBuffername, string uniformCountName){
+            if(buffer == null){
+                buffer = new ComputeBuffer(vectorArray.Count, sizeof(float) * 4);
+                buffer.SetData(vectorArray);
+                compute.SetBuffer(kernel, uniformBuffername, buffer);
+                compute.SetInt(uniformCountName, vectorArray.Count);
             }else{
-                posBuffer.SetData(vectorArray);
+                buffer.SetData(vectorArray);
             }
         }
 

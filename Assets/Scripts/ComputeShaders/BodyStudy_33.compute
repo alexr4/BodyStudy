@@ -1,0 +1,168 @@
+#pragma kernel CSMain
+
+#include "Assets/Scripts/ComputeShaders/DataStructs.hlsl"
+#include "Assets/Scripts/Utils/maths.hlsl"
+#include "Assets/Scripts/Utils/sdf3Dshape.hlsl"
+#include "Assets/Scripts/Utils/sdfOperator.hlsl"
+#include "Assets/Scripts/Utils/noises.hlsl"
+#include "Assets/Scripts/Utils/easing.hlsl"
+#include "Assets/Scripts/Utils/MatrixFormAngleAxis.hlsl"
+
+uniform RWStructuredBuffer<MeshPropertiesExtended> _Properties;
+uniform StructuredBuffer<float3> _Position;
+uniform StructuredBuffer<float3> _Normal;
+uniform StructuredBuffer<float4> _Tangent;
+uniform int _PositionCount;
+uniform int _NormalCount;
+uniform int _TangentCount;
+uniform float3 _World;
+uniform float3 _ModelDescription;
+uniform float _MinScale;
+uniform float _MaxScale;
+uniform float _Time;
+uniform float4x4 _TRS;
+uniform float3 _Wind;
+uniform Texture2D<float4> _BodyRamp;
+uniform float2 _RampSize;
+uniform float _MinOffset;
+uniform float _MaxOffset;
+uniform float _OffsetY;
+uniform float _DotdOffset;
+
+#define PI 3.14159265359
+
+struct VertData{
+    float2 data; //inde + dist
+    float3 position;
+};
+
+// TO DO : update this mathod using a cell index based system (see stream)
+// info https://bgolus.medium.com/normal-mapping-for-a-triplanar-shader-10bf39dca05a
+VertData GetClosestIndex(float3 position){
+    VertData vertdata;
+
+    float maxDist = 100000.0;
+    int index = -1;
+    float3 nearest;
+    for(int i=0; i<_PositionCount; i++){
+        float3 vertPosition = _Position[i];
+        float3 normal       = _Normal[i];
+
+        float normy         = saturate(vertPosition.y / (_World.y * _OffsetY));
+        uint3 uvramp        = uint3(normy * _RampSize.x, 0.5 * _RampSize.y, 0);
+        float rampSize      = _BodyRamp.Load(uvramp).x;
+        float3 normOffset   = (_MinOffset + rampSize * (_MaxOffset - _MinOffset)) * normal;
+
+        vertPosition        += normOffset;
+        vertPosition        =  mul(_TRS, float4(vertPosition, 1)).xyz;
+
+        float dist          = distance(vertPosition, position);
+        if(dist < maxDist && dist > 0.0){
+            index   = i;
+            maxDist = dist;
+            nearest = vertPosition;
+        }
+    }
+
+    vertdata.data = float2(index, maxDist);
+    vertdata.position = nearest;
+
+    return vertdata;
+}
+
+
+// For the sake of simplicity, only using 1000, 1, 1 threads.
+[numthreads(64, 1, 1)]
+void CSMain (uint3 id : SV_DispatchThreadID) {
+
+    float4x4 trmat  = _Properties[id.x].trmat;
+    float4x4 oscmat = _Properties[id.x].oscmat;
+    float4x4 scmat  = _Properties[id.x].scmat;
+    float4x4 rotation = _Properties[id.x].rotmat;
+
+    float3 ascale   = float3(scmat[0][0], scmat[1][1], scmat[2][2]);
+    float3 oscale   = float3(oscmat[0][0], oscmat[1][1], oscmat[2][2]);
+    float3 opos     = _Properties[id.x].opos;
+    int index       = int(_Properties[id.x].data.x);
+
+    //Time Management
+    float maxTime   = 4.0;
+    float time      = _Time;
+    float mod       = (_Time %  maxTime);
+    float normTime  = mod / maxTime;
+    float loop      = floor(_Time / maxTime);
+    float easedTime = outCubic(abs(normTime * 2.0 - 1.0));
+
+    float aloop     = _Properties[id.x].data.z;
+    float3 position = float3(trmat[0][3], trmat[1][3], trmat[2][3]);
+    
+    if(aloop == loop) {
+        mod               = time % maxTime;
+        normTime          = mod / maxTime;
+    }else{
+        _Properties[id.x].data.z    = loop; 
+        normTime                    = 1;
+        mod                         = 1;
+    }
+
+    VertData nearest = GetClosestIndex(position);
+    
+    float3 vertNormal       = _Normal[nearest.data.x];
+    float3 vertex           = nearest.position;
+    float3 vertToInstance   = normalize(position - vertex);
+
+    float IdotV             = dot(vertToInstance, vertNormal);
+    float normDist          = saturate(nearest.data.y / 0.025);
+    if(IdotV <= _DotdOffset){
+        ascale = oscale * normDist;
+    }else{
+        ascale = oscale * 0.0;
+    }
+
+    int modLoop         = (aloop % 3);
+    
+    float noiseHeight   = noise(position.xyz * 8.0 + _Time * 1.0);
+    noiseHeight         = step(0.5, noiseHeight);
+
+    float normy         = saturate(position.y / _World.y + (noiseHeight * 2.0 - 1.0) * 0.25);
+    float thickness     = 0.15;
+    float thickness2    = 0.35;
+    float reveal        = 0;
+    float reveal2       = 0;
+    float revealTime    = normTime;
+
+    if(modLoop == 0){
+        //Appear
+        reveal  = smoothstep(normy - thickness * 0.5, normy + thickness * 0.5, revealTime);
+        reveal2  = smoothstep(normy - thickness2 * 0.5, normy + thickness2 * 0.5, revealTime);
+    }else if(modLoop == 1){
+        //life
+        reveal = 1.0;
+        reveal2 = 1.0;
+    }else if(modLoop == 2){
+        //Disappear
+        reveal = 1.0 - smoothstep(normy - thickness * 0.5, normy + thickness * 0.5, revealTime);
+        reveal2 = 1.0 - smoothstep(normy - thickness2 * 0.5, normy + thickness2 * 0.5, revealTime);
+    }
+
+    reveal  = inCubic(reveal);
+    ascale *= saturate(reveal - (1.0 - reveal2) * noiseHeight);
+
+    //rotation
+    float3 axis     = float3(
+                        random3(position.xyz + _Properties[id.x].data.w), 
+                        random3(position.yzx + _Properties[id.x].data.w), 
+                        random3(position.zyx + _Properties[id.x].data.w));
+
+    float4x4 rotmat = AngleAxis4x4(_Time * _Properties[id.x].data.w, normalize(axis * 2.0 - 1.0));
+  
+    float4x4 scalemat = float4x4(
+        ascale.x, 0, 0, 0,
+        0, ascale.y, 0, 0,
+        0, 0, ascale.z, 0,
+        0, 0, 0, 1
+    );
+
+    _Properties[id.x].scmat     = scalemat; 
+    _Properties[id.x].rotmat    = rotmat; 
+}

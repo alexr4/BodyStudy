@@ -19,12 +19,15 @@ namespace Com.BonjourLab{
         public List<List<Vector4>> mixamoNormalList         = new List<List<Vector4>>();
         public List<List<Vector3>> mixamoVert3List          = new List<List<Vector3>>();
         public List<List<Vector3>> mixamoNormal3List        = new List<List<Vector3>>();
+        public List<List<Vector4>> mixamoTangent4List        = new List<List<Vector4>>();
         
 
         //debug
         public bool showBonesGizmos = true;
         public bool showNormalsGizmos = true;
         public int normalOffset = 50;
+        public bool showTrangentsGizmos = true;
+        public int tanOffset = 50;
         public bool showBound;
 
         private void Update(){
@@ -89,12 +92,15 @@ namespace Com.BonjourLab{
         public void GetMixamoVert3ListFromTag(){
             mixamoVert3List.Clear();
             mixamoNormal3List.Clear();
+            mixamoTangent4List.Clear();
             for(int i=0; i<mixamoRigList.Count; i++){
-                List<Vector3> vertList = new List<Vector3>();
-                List<Vector3> normList = new List<Vector3>();
-                GetMixamoVert3ListFromTag(mixamoRigList[i], i, vertList, normList, meshtag);
+                List<Vector3> vertList  = new List<Vector3>();
+                List<Vector3> normList  = new List<Vector3>();
+                List<Vector4> tanList   = new List<Vector4>();
+                GetMixamoVert3ListFromTag(mixamoRigList[i], i, vertList, normList, tanList, meshtag);
                 mixamoVert3List.Add(vertList);
                 mixamoNormal3List.Add(normList);
+                mixamoTangent4List.Add(tanList);
             }
         }
 
@@ -119,7 +125,7 @@ namespace Com.BonjourLab{
             }
         }
 
-        private void GetMixamoVert3ListFromTag(Transform trs, int index, List<Vector3> vertList, List<Vector3> normList, string meshTag){
+        private void GetMixamoVert3ListFromTag(Transform trs, int index, List<Vector3> vertList, List<Vector3> normList, List<Vector4> tanList, string meshTag){
             for(int j=0; j<trs.childCount; j++){
                 Transform child = trs.GetChild(j);
                 if(child.tag == meshTag){
@@ -128,10 +134,11 @@ namespace Com.BonjourLab{
                     skin.BakeMesh(mesh);
                     vertList.AddRange(mesh.vertices);
                     normList.AddRange(mesh.normals);
+                    tanList.AddRange(mesh.tangents);
                     // mesh = skin.sharedMesh;
                 }
                 if(child.childCount > 0){
-                    GetMixamoVert3ListFromTag(child, index, vertList, normList, meshTag);
+                    GetMixamoVert3ListFromTag(child, index, vertList, normList, tanList, meshTag);
                 }
             }
         }
@@ -219,21 +226,36 @@ namespace Com.BonjourLab{
                 }
             }
 
-            if(showNormalsGizmos)
+            if(showNormalsGizmos || showTrangentsGizmos)
             {
                 GetMixamoVert3ListFromTag();
-                Gizmos.color = Color.blue;
                 for(int j=0; j<mixamoVert3List.Count; j++){
                     List<Vector3> vertlist  = mixamoVert3List[j];
                     List<Vector3> normList  = mixamoNormal3List[j];
+                    List<Vector4> tanList   = mixamoTangent4List[j];
                     Transform tr            = mixamoRigList[j];
-                    for(int i=0; i<vertlist.Count; i+=normalOffset){
-                        Vector3 v = new Vector3(vertlist[i].x, vertlist[i].y, vertlist[i].z);
-                        Vector3 n = new Vector3(normList[i].x, normList[i].y, normList[i].z);
-                        Gizmos.DrawLine(tr.position+v, tr.position + v + n * 0.05f);
+
+                    if(showNormalsGizmos){
+                        Gizmos.color = Color.blue;
+                        for(int i=0; i<vertlist.Count; i+=normalOffset){
+                            Vector3 v = new Vector3(vertlist[i].x, vertlist[i].y, vertlist[i].z);
+                            Vector3 n = new Vector3(normList[i].x, normList[i].y, normList[i].z);
+                            Gizmos.DrawLine(tr.position+v, tr.position + v + n * 0.05f);
+                        }
+                    }
+
+                    if(showTrangentsGizmos){
+                        Gizmos.color = Color.magenta;
+                        for(int i=0; i<vertlist.Count; i+=tanOffset){
+                            Vector3 v = new Vector3(vertlist[i].x, vertlist[i].y, vertlist[i].z);
+                            Vector3 t = new Vector3(tanList[i].x, tanList[i].y, tanList[i].z);
+                            Gizmos.DrawLine(tr.position+v, tr.position + v + t * 0.05f);
+                        }
                     }
                 }
             }
+
+
 
             if(showBound){
                 Gizmos.color = Color.red;

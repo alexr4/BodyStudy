@@ -49,4 +49,6 @@ void vertex(inout appdata_full v, out Input o){
     o.data  = props.data;
     o.pos  = props.opos;
     #endif
+
+    
 }

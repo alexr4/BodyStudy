@@ -7,6 +7,12 @@ namespace Com.BonjourLab{
     {
         [Tooltip("Defines if you want to retreives the Bonez or the Vertices of your reference SkinnedMesh")]
         public bool isMesh = true;
+
+        [Tooltip("Push updated tangents to the compute shader")]
+        public bool bindTangents = false;
+
+        [Tooltip("Push updated normals to the compute shader")]
+        public bool bindNormals = false;
         // private GPUMeshController_1130[] foundGPUMeshControllers;
 
         private MixamoRigController mixamoRigController;
@@ -52,6 +58,10 @@ namespace Com.BonjourLab{
 
                 gpumeshcontrolleri.Initialize();
                 gpumeshcontrolleri.BindVectorArray(mixamoRigController.mixamoVert3List[0]);
+                
+                if(bindTangents) gpumeshcontrolleri.BindTanArray(mixamoRigController.mixamoTangent4List[0]);
+                if(bindNormals) gpumeshcontrolleri.BindNormArray(mixamoRigController.mixamoNormal3List[0]);
+
                 gpumeshcontrolleri.BindTRS(mixamoRigController.GetTRS(0));
                 gpumeshcontrolleri.Compute();
             }
@@ -79,6 +89,10 @@ namespace Com.BonjourLab{
              for(int i=0; i<gpuMeshController.Length; i++){
                 GPUMeshController gpumeshcontrolleri = gpuMeshController[i];
                 gpumeshcontrolleri.BindVectorArray(mixamoRigController.mixamoVert3List[0]);
+
+                if(bindTangents) gpumeshcontrolleri.BindTanArray(mixamoRigController.mixamoTangent4List[0]);
+                if(bindNormals) gpumeshcontrolleri.BindNormArray(mixamoRigController.mixamoNormal3List[0]);
+
                 gpumeshcontrolleri.BindTRS(mixamoRigController.GetTRS(0));
                 gpumeshcontrolleri.Compute();
              }
@@ -89,6 +103,8 @@ namespace Com.BonjourLab{
             for(int i=0; i<gpuMeshController.Length; i++){
                 GPUMeshController gpumeshcontrolleri = gpuMeshController[i];
                 gpumeshcontrolleri.BindVectorArray(mixamoRigController.mixamoRig3PositionList[0]);
+
+
                 gpumeshcontrolleri.BindTRS(mixamoRigController.GetTRS(0));
                 gpumeshcontrolleri.Compute();
             }
