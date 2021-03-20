@@ -151,8 +151,6 @@
             float2 ty = IN.vertex.zx * _MapScale;
             float2 tz = IN.vertex.xy * _MapScale;
 
-            
-
             TriplanarData mapping;
             mapping.tx = tx;
             mapping.ty = ty;

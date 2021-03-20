@@ -86,18 +86,6 @@ namespace Com.BonjourLab{
 
             //Get the Main function from your Compute shader
             kernel = compute.FindKernel("CSMain");
-
-            //Argument buffer used by DrawMeshInstanceIndirect
-            uint[] args = new uint[5]{0, 0, 0, 0, 0};
-            //arguments for drawing mesh
-            //0 = number of triangle indices, 1 = maxInstance, other are obly relevant for drawing submeshes
-            args[0] = (uint) mesh.GetIndexCount(0);
-            args[1] = (uint) maxInstance;
-            args[2] = (uint) mesh.GetIndexStart(0);
-            args[3] = (uint) mesh.GetBaseVertex(0);
-
-            argsBuffer = new ComputeBuffer(1, args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
-            argsBuffer.SetData(args);
             
             // scale modeldesc to ref world TRS
             modelDescription = new Vector3( modelDescription.x * refTransform.lossyScale.x,
@@ -108,6 +96,8 @@ namespace Com.BonjourLab{
             world           = new Vector3(  world.x * trsProperties.size.x,
                                             world.y * trsProperties.size.y,
                                             world.z * trsProperties.size.z); 
+
+            SetArgumentBuffer();
 
             //get local transform to gravity center
             toGravityCenter = trsProperties.gravityCenter - transform.position;
@@ -120,6 +110,20 @@ namespace Com.BonjourLab{
             
             BindBasedDataToComputeShader(); //Bind global variable to Compute Shader
             BindUpdatedDataToComputeShader();//Bind first update of real time datas
+        }
+
+        protected virtual void SetArgumentBuffer(){
+            //Argument buffer used by DrawMeshInstanceIndirect
+            uint[] args = new uint[5]{0, 0, 0, 0, 0};
+            //arguments for drawing mesh
+            //0 = number of triangle indices, 1 = maxInstance, other are obly relevant for drawing submeshes
+            args[0] = (uint) mesh.GetIndexCount(0);
+            args[1] = (uint) maxInstance;
+            args[2] = (uint) mesh.GetIndexStart(0);
+            args[3] = (uint) mesh.GetBaseVertex(0);
+
+            argsBuffer = new ComputeBuffer(1, args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
+            argsBuffer.SetData(args);
         }
 
         public virtual void SetBasedInstanceData(){
